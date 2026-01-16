@@ -91,6 +91,47 @@ Reference: [Hono Routing](https://hono.dev/docs/api/routing)
 
 ## Core Concepts
 
+## Body Parsing
+
+Hono provides distinct methods for parsing different body types.
+
+**JSON:**
+Use `c.req.json()` for JSON payloads.
+
+```typescript
+app.post('/api/data', async (c) => {
+  const data = await c.req.json()
+  return c.json(data)
+})
+```
+
+**Form Data / Multipart:**
+Use `c.req.parseBody()` for `application/x-www-form-urlencoded` or `multipart/form-data`.
+
+```typescript
+app.post('/submit', async (c) => {
+  const body = await c.req.parseBody()
+  const username = body['username']
+  const file = body['file'] // File object if uploaded
+  return c.text(`Hello ${username}`)
+})
+```
+
+**Raw ArrayBuffer:**
+Use `c.req.arrayBuffer()` for raw binary data.
+
+```typescript
+app.post('/upload', async (c) => {
+  const buffer = await c.req.arrayBuffer()
+  // process buffer
+  return c.text('Uploaded')
+})
+```
+
+**Note:** `parseBody` handles both urlencoded and multipart automatically.
+
+---
+
 ## Context Object Pattern
 
 Hono consolidates request and response into a single Context (`c`) object. This is NOT like Express.
@@ -509,6 +550,46 @@ Reference: [Secure Headers](https://hono.dev/docs/middleware/builtin/secure-head
 
 ---
 
+## Input Validation
+
+Use `validator` middleware to validate request data (json, form, query, param, header, cookie).
+
+**With Zod:**
+
+```typescript
+import { z } from 'zod'
+import { zValidator } from '@hono/zod-validator'
+
+const schema = z.object({
+  name: z.string(),
+  age: z.number(),
+})
+
+app.post('/user', zValidator('json', schema), (c) => {
+  const data = c.req.valid('json') // Typed as { name: string, age: number }
+  return c.json(data)
+})
+```
+
+**Built-in Validator:**
+
+```typescript
+import { validator } from 'hono/validator'
+
+app.post('/post', validator('form', (value, c) => {
+  const title = value['title']
+  if (!title || typeof title !== 'string') {
+    return c.text('Invalid title', 400)
+  }
+  return { title }
+}), (c) => {
+  const { title } = c.req.valid('form')
+  return c.json({ title })
+})
+```
+
+---
+
 ## Runtime Adapters
 
 ## Bun and Node.js Setup
@@ -750,6 +831,63 @@ Reference: [MDN ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API
 
 ---
 
+## JSX Engine
+
+Hono has a built-in JSX engine that is fast and lightweight. It runs on any runtime.
+
+**Configuration (tsconfig.json):**
+
+```json
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx"
+  }
+}
+```
+
+**Usage:**
+
+```typescript
+import { Hono } from 'hono'
+import { jsxRenderer } from 'hono/jsx-renderer'
+
+const app = new Hono()
+
+app.get(
+  '*',
+  jsxRenderer(({ children }) => {
+    return (
+      <html>
+        <body>
+          <h1>My App</h1>
+          {children}
+        </body>
+      </html>
+    )
+  })
+)
+
+app.get('/', (c) => {
+  return c.render(<div>Hello!</div>)
+})
+```
+
+**Streaming:**
+
+```typescript
+import { streamSSR } from 'hono/streaming'
+
+app.get('/stream', (c) => {
+  return streamSSR(c, async (stream) => {
+    await stream.write(<h1>Hello</h1>)
+    await stream.write(<p>World</p>)
+  })
+})
+```
+
+---
+
 ## Streaming and SSE
 
 Hono provides streaming helpers for real-time responses.
@@ -917,4 +1055,4 @@ Reference: [Migration Guide](https://github.com/honojs/hono/blob/main/docs/MIGRA
 
 ---
 
-*Generated from 13 rules.*
+*Generated from 18 rules.*

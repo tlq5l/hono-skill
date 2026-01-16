@@ -41,6 +41,9 @@ app.get('/users/:id', (c) => {
   const id = c.req.param('id')        // NOT req.params.id
   const page = c.req.query('page')    // NOT req.query.page
   const auth = c.req.header('Authorization')
+  const body = await c.req.json()     // JSON body
+  // OR
+  const form = await c.req.parseBody() // Form data
 
   return c.json({ id, page })         // MUST return
 })
@@ -75,27 +78,48 @@ app.use('*', async (c, next) => {
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { jwt } from 'hono/jwt'
-import { bearerAuth } from 'hono/bearer-auth'
+import { validator } from 'hono/validator'
 
 app.use('*', logger())
 app.use('/api/*', cors())
+
+// Validation
+app.post('/post', validator('json', (value, c) => {
+  if (!value.title) return c.text('Invalid', 400)
+  return value
+}))
 ```
 
-## Error Handling
+## RPC Client (hc)
 
 ```typescript
-import { HTTPException } from 'hono/http-exception'
+// Server
+const route = app.get('/api', (c) => c.json({ ok: true }))
+export type AppType = typeof route
 
-app.get('/protected', (c) => {
-  throw new HTTPException(401, { message: 'Unauthorized' })
-})
+// Client
+import { hc } from 'hono/client'
+const client = hc<AppType>('http://localhost:8787')
+const res = await client.api.$get()
+```
 
-app.onError((err, c) => {
-  if (err instanceof HTTPException) {
-    return err.getResponse()
-  }
-  return c.json({ error: 'Server error' }, 500)
-})
+## JSX Engine
+
+```typescript
+import { Hono } from 'hono'
+import { jsxRenderer } from 'hono/jsx-renderer'
+
+const app = new Hono()
+app.get('*', jsxRenderer(({ children }) => <html><body>{children}</body></html>))
+app.get('/', (c) => c.render(<h1>Hello!</h1>))
+```
+
+## Runtime Detection
+
+```typescript
+import { getRuntimeKey } from 'hono/adapter'
+// 'workerd', 'bun', 'node', 'deno'
+const runtime = getRuntimeKey()
 ```
 
 ## Cloudflare Workers
@@ -128,18 +152,6 @@ app.get('/', (c) => c.text('Hello Node!'))
 serve({ fetch: app.fetch, port: 3000 })
 ```
 
-## Streaming/SSE
-
-```typescript
-import { streamSSE } from 'hono/streaming'
-
-app.get('/sse', (c) => {
-  return streamSSE(c, async (s) => {
-    await s.writeSSE({ data: 'hello', event: 'message' })
-  })
-})
-```
-
 ## v3 → v4 Migration
 
 | v3 | v4 |
@@ -147,17 +159,6 @@ app.get('/sse', (c) => {
 | `c.jsonT()` | `c.json()` |
 | `c.stream()` | `import { stream } from 'hono/streaming'` |
 | `hono/nextjs` | `hono/vercel` |
-
-## tRPC Integration
-
-```typescript
-import { trpcServer } from '@hono/trpc-server'
-
-app.use('/trpc/*', trpcServer({
-  router: appRouter,
-  createContext: (_opts, c) => createContext({ context: c }),
-}))
-```
 
 ## Anti-patterns
 
