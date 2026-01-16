@@ -79,4 +79,8 @@ import { showRoutes } from 'hono/dev'
 showRoutes(app)
 ```
 
+**When NOT to use this pattern:**
+- If you are still on Hono v3 (but you should upgrade!).
+- When using community middleware that hasn't been updated for v4 yet.
+
 Reference: [Migration Guide](https://github.com/honojs/hono/blob/main/docs/MIGRATION.md)

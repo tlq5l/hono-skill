@@ -38,7 +38,9 @@ const data = await res.json()
 console.log(data.message)
 ```
 
-**Features:**
-- Full type safety for paths, methods, request data, and response data
-- No code generation required
-- Works in any fetch-compatible environment
+**When NOT to use this pattern:**
+- When the client is written in a language other than TypeScript/JavaScript.
+- When the API needs to be consumed by third-party developers without access to your source code types.
+- For very simple APIs where the setup overhead outweighs the benefits.
+
+Reference: [RPC](https://hono.dev/docs/guides/rpc)

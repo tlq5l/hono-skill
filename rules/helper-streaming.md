@@ -80,4 +80,9 @@ app.get('/stream', (c) => {
 })
 ```
 
+**When NOT to use this pattern:**
+- For small responses where buffering is faster and simpler.
+- When the client doesn't support streaming (e.g., some older HTTP clients).
+- If you need to modify the response headers *after* streaming has started (impossible).
+
 Reference: [Streaming](https://hono.dev/docs/helpers/streaming)

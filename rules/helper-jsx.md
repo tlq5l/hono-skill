@@ -59,3 +59,10 @@ app.get('/stream', (c) => {
   })
 })
 ```
+
+**When NOT to use this pattern:**
+- Building complex interactive SPAs (use React, Vue, Svelte, etc., on the client).
+- When you need full React compatibility (use `react-dom/server` if necessary, though heavier).
+- For simple string concatenation where JSX adds unnecessary build complexity.
+
+Reference: [JSX](https://hono.dev/docs/guides/jsx)

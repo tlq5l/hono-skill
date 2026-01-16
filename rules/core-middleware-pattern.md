@@ -71,4 +71,8 @@ app.use('*', async (c, next) => {
 })
 ```
 
+**When NOT to use this pattern:**
+- When porting legacy Express middleware that heavily relies on synchronous execution or modifying the `req`/`res` objects directly (rewrite is preferred).
+- For simple logic that can be handled within the route handler itself.
+
 Reference: [Middleware](https://hono.dev/docs/guides/middleware)

@@ -27,10 +27,8 @@ if (runtime === 'workerd') {
 }
 ```
 
-**Supported Runtimes:**
-- `workerd`: Cloudflare Workers / Pages
-- `bun`: Bun
-- `node`: Node.js
-- `deno`: Deno
-- `fastly`: Fastly Compute
-- `edge-light`: Vercel Edge Functions
+**When NOT to use this pattern:**
+- If you are building a runtime-specific app (e.g., only Cloudflare Workers) and don't need cross-platform compatibility.
+- When performance is critical and runtime checks add unnecessary overhead (though `getRuntimeKey` is very fast).
+
+Reference: [Runtime Helper](https://hono.dev/docs/helpers/adapter#runtime)

@@ -81,4 +81,8 @@ app.post('/users', zValidator('json', schema), (c) => {
 })
 ```
 
+**When NOT to use this pattern:**
+- For quick prototypes where type safety is not a priority.
+- When working with dynamic data structures that are hard to type (though `unknown` or `any` can be used sparingly).
+
 Reference: [RPC](https://hono.dev/docs/guides/rpc)

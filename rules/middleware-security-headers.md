@@ -58,4 +58,8 @@ app.use('*', secureHeaders({
 
 Use `await next()` then modify `c.res.headers` in `finally` block to ensure headers are set even on errors.
 
+**When NOT to use this pattern:**
+- When you are behind a proxy/CDN that already handles security headers (though defense-in-depth is good).
+- If a specific header breaks your application (configure it carefully instead of disabling).
+
 Reference: [Secure Headers](https://hono.dev/docs/middleware/builtin/secure-headers)

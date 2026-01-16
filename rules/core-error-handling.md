@@ -75,4 +75,8 @@ app.get('/data', async (c) => {
 })
 ```
 
+**When NOT to use this pattern:**
+- For recoverable errors where you want to return a specific success-like response (e.g., partial success).
+- When using a library that manages its own error responses internally (though you can wrap it).
+
 Reference: [Error Handling](https://hono.dev/docs/api/exception)

@@ -52,4 +52,9 @@ app.get('/stream', (c) => {
 - Integrating with external streaming APIs
 - Fine-grained control over encoding
 
+**When NOT to use this pattern:**
+- For standard text/JSON responses (use `c.text` or `c.json`).
+- When simple streaming helpers like `stream` or `streamText` suffice.
+- If the runtime doesn't fully support the Web Streams API (rare nowadays).
+
 Reference: [MDN ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)

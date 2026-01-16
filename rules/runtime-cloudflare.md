@@ -102,4 +102,8 @@ app.get('/', (c) => {
 - Testable: easy to mock in tests
 - Future-proof: follows Cloudflare's execution model
 
+**When NOT to use this pattern:**
+- If you are running on Node.js or Bun (env access is different).
+- When using a platform-agnostic way to access env vars (use `env(c)` helper, though `c.env` is preferred for types on Workers).
+
 Reference: [Cloudflare Workers](https://hono.dev/docs/getting-started/cloudflare-workers)

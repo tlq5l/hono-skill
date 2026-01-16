@@ -86,4 +86,8 @@ app.get('/', (c) => c.text('Hello Deno!'))
 Deno.serve(app.fetch)
 ```
 
+**When NOT to use this pattern:**
+- If you are deploying to Cloudflare Workers (use the Workers adapter).
+- When using Deno (use the Deno adapter).
+
 Reference: [Bun](https://hono.dev/docs/getting-started/bun) | [Node.js](https://hono.dev/docs/getting-started/nodejs)

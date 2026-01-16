@@ -72,4 +72,9 @@ const client = createTRPCClient<AppRouter>({
 const result = await client.hello.query()
 ```
 
+**When NOT to use this pattern:**
+- If you need a RESTful API for public consumption (tRPC is RPC-based).
+- When you want to minimize client-side bundle size (tRPC client adds some weight).
+- If your team is not using TypeScript.
+
 Reference: [@hono/trpc-server](https://github.com/honojs/middleware/tree/main/packages/trpc-server)

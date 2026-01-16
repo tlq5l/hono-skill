@@ -59,4 +59,9 @@ app.get('/search', (c) => {
 })
 ```
 
+**When NOT to use this pattern:**
+- One-off scripts where Express is already set up.
+- Legacy codebases with deep Express integration.
+- If you need specific features only available in other frameworks (rare).
+
 Reference: [Hono Routing](https://hono.dev/docs/api/routing)

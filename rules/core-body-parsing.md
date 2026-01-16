@@ -42,4 +42,8 @@ app.post('/upload', async (c) => {
 })
 ```
 
-**Note:** `parseBody` handles both urlencoded and multipart automatically.
+**When NOT to use this pattern:**
+- When you need streaming access to the body (use `c.req.raw.body` directly).
+- For very large file uploads where buffering the whole body is not feasible (use streaming).
+
+Reference: [Body Parsing](https://hono.dev/docs/api/request#body)

@@ -81,4 +81,8 @@ app.use('*', secureHeaders())
 - `hono/cache` - Caching
 - `hono/csrf` - CSRF protection
 
+**When NOT to use this pattern:**
+- When you need highly custom behavior not supported by the built-in middleware options.
+- If the middleware adds significant overhead for a feature you don't need (e.g., full logger in production high-throughput endpoints).
+
 Reference: [Built-in Middleware](https://hono.dev/docs/middleware/builtin)

@@ -56,4 +56,8 @@ app.get('/raw', (c) => {
 })
 ```
 
+**When NOT to use this pattern:**
+- When integrating with middleware or libraries that strictly require Express-style `req`/`res` objects (though adapters exist).
+- In extremely performance-sensitive low-level code where object allocation matters (rare).
+
 Reference: [Context](https://hono.dev/docs/api/context)

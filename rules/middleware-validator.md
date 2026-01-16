@@ -42,3 +42,9 @@ app.post('/post', validator('form', (value, c) => {
   return c.json({ title })
 })
 ```
+
+**When NOT to use this pattern:**
+- For extremely simple endpoints where manual checking is trivial and sufficient.
+- When performance is the absolute top priority and validation library overhead is unacceptable (write custom raw validation).
+
+Reference: [Validator](https://hono.dev/docs/guides/validation)
