@@ -1,0 +1,35 @@
+{
+  "name": "@anthropic/hono-skill",
+  "version": "0.1.0",
+  "description": "Hono web framework skill for AI coding agents",
+  "type": "module",
+  "main": "AGENTS.md",
+  "scripts": {
+    "build": "bun run src/build.ts"
+  },
+  "files": [
+    "AGENTS.md",
+    "rules/",
+    "test-cases.json",
+    "metadata.json"
+  ],
+  "keywords": [
+    "hono",
+    "web-framework",
+    "ai",
+    "agent",
+    "skill",
+    "cloudflare-workers",
+    "bun",
+    "edge"
+  ],
+  "author": "Anthropic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tlq5l/hono-skill"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  }
+}

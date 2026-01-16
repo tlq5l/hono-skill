@@ -1,0 +1,21 @@
+{
+  "name": "hono",
+  "version": "0.1.0",
+  "status": "draft",
+  "organization": "Generated from honojs/hono",
+  "sourceRepo": "https://github.com/honojs/hono",
+  "sourceVersion": "4.11.4",
+  "generatedAt": "2026-01-16",
+  "abstract": "Hono web framework patterns for AI coding agents. Lightweight, multi-runtime (Cloudflare, Bun, Node, Deno), middleware, typed routes, and patterns that differ from Express.",
+  "references": [
+    "https://hono.dev/docs/",
+    "https://hono.dev/docs/getting-started/basic",
+    "https://hono.dev/docs/guides/middleware",
+    "https://hono.dev/docs/guides/rpc"
+  ],
+  "testStatus": {
+    "totalCases": 0,
+    "passing": 0,
+    "lastRun": null
+  }
+}

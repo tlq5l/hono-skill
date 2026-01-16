@@ -1,0 +1,89 @@
+{
+  "description": "Hono skill test cases - bad patterns vs correct patterns",
+  "cases": [
+    {
+      "id": "return-response",
+      "rule": "setup-basic-routing",
+      "description": "Must return response from handler",
+      "bad": "app.get('/users', (c) => { c.json({ users: [] }) })",
+      "good": "app.get('/users', (c) => { return c.json({ users: [] }) })"
+    },
+    {
+      "id": "context-params",
+      "rule": "core-context-object",
+      "description": "Use c.req.param() not req.params",
+      "bad": "app.get('/users/:id', (c) => { const id = c.req.params.id })",
+      "good": "app.get('/users/:id', (c) => { const id = c.req.param('id') })"
+    },
+    {
+      "id": "async-middleware",
+      "rule": "core-middleware-pattern",
+      "description": "Use await next() not callback style",
+      "bad": "app.use('*', (c, next) => { console.log('before'); next() })",
+      "good": "app.use('*', async (c, next) => { console.log('before'); await next() })"
+    },
+    {
+      "id": "middleware-import",
+      "rule": "middleware-builtin",
+      "description": "Import middleware from hono/* not hono",
+      "bad": "import { cors, jwt } from 'hono'",
+      "good": "import { cors } from 'hono/cors'; import { jwt } from 'hono/jwt'"
+    },
+    {
+      "id": "error-handling",
+      "rule": "core-error-handling",
+      "description": "Use HTTPException not Error for HTTP errors",
+      "bad": "throw new Error('Not found')",
+      "good": "throw new HTTPException(404, { message: 'Not found' })"
+    },
+    {
+      "id": "typed-env",
+      "rule": "core-type-safety",
+      "description": "Type the Hono generic for bindings",
+      "bad": "const app = new Hono()",
+      "good": "const app = new Hono<{ Bindings: { DATABASE_URL: string } }>()"
+    },
+    {
+      "id": "cloudflare-env",
+      "rule": "runtime-cloudflare",
+      "description": "Use c.env not process.env in Workers",
+      "bad": "const apiKey = process.env.API_KEY",
+      "good": "const apiKey = c.env.API_KEY"
+    },
+    {
+      "id": "node-adapter",
+      "rule": "runtime-bun-node",
+      "description": "Use @hono/node-server for Node.js",
+      "bad": "app.listen(3000)",
+      "good": "import { serve } from '@hono/node-server'; serve({ fetch: app.fetch, port: 3000 })"
+    },
+    {
+      "id": "streaming-import",
+      "rule": "migration-v3-to-v4",
+      "description": "Import streaming from helper not context",
+      "bad": "return c.stream(async (stream) => { ... })",
+      "good": "import { stream } from 'hono/streaming'; return stream(c, async (s) => { ... })"
+    },
+    {
+      "id": "sse-helper",
+      "rule": "helper-streaming",
+      "description": "Use streamSSE for server-sent events",
+      "bad": "c.header('Content-Type', 'text/event-stream'); return c.body(...)",
+      "good": "import { streamSSE } from 'hono/streaming'; return streamSSE(c, async (s) => { await s.writeSSE({ data: '...' }) })"
+    },
+    {
+      "id": "json-typed",
+      "rule": "migration-v3-to-v4",
+      "description": "Use c.json() not c.jsonT() in v4",
+      "bad": "return c.jsonT({ data: 'typed' })",
+      "good": "return c.json({ data: 'typed' })"
+    },
+    {
+      "id": "vercel-adapter",
+      "rule": "migration-v3-to-v4",
+      "description": "Use hono/vercel not hono/nextjs in v4",
+      "bad": "import { handle } from 'hono/nextjs'",
+      "good": "import { handle } from 'hono/vercel'"
+    }
+  ]
+}
