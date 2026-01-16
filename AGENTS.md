@@ -452,6 +452,63 @@ Reference: [Built-in Middleware](https://hono.dev/docs/middleware/builtin)
 
 ---
 
+## Security Headers Middleware
+
+Add security headers using post-processing middleware pattern.
+
+**Custom security headers middleware:**
+
+```typescript
+app.use('*', async (c, next) => {
+  try {
+    await next()
+  } finally {
+    const h = c.res.headers
+
+    if (!h.has('Strict-Transport-Security')) {
+      h.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')
+    }
+    if (!h.has('X-Content-Type-Options')) {
+      h.set('X-Content-Type-Options', 'nosniff')
+    }
+    if (!h.has('Referrer-Policy')) {
+      h.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+    }
+  }
+})
+```
+
+**Prefer built-in secureHeaders:**
+
+```typescript
+import { secureHeaders } from 'hono/secure-headers'
+
+// ✅ Better - built-in middleware
+app.use('*', secureHeaders())
+```
+
+**secureHeaders options:**
+
+```typescript
+app.use('*', secureHeaders({
+  strictTransportSecurity: 'max-age=31536000',
+  xContentTypeOptions: 'nosniff',
+  xFrameOptions: 'DENY',
+  contentSecurityPolicy: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "'unsafe-inline'"],
+  }
+}))
+```
+
+**Post-processing pattern:**
+
+Use `await next()` then modify `c.res.headers` in `finally` block to ensure headers are set even on errors.
+
+Reference: [Secure Headers](https://hono.dev/docs/middleware/builtin/secure-headers)
+
+---
+
 ## Runtime Adapters
 
 ## Bun and Node.js Setup
@@ -608,6 +665,18 @@ database_id = "xxx"
 const apiKey = process.env.API_KEY
 ```
 
+**Incorrect (global env singleton):**
+
+```typescript
+// ❌ Wrong - breaks request isolation, testing issues
+// src/env.ts
+export const env = (globalThis as unknown as { env: Env }).env
+
+// src/routes.ts
+import { env } from './env'  // Anti-pattern!
+const key = env.API_KEY
+```
+
 **Correct (using c.env):**
 
 ```typescript
@@ -618,11 +687,68 @@ app.get('/', (c) => {
 })
 ```
 
+**Why c.env matters:**
+
+- Request-scoped: each request gets correct bindings
+- Testable: easy to mock in tests
+- Future-proof: follows Cloudflare's execution model
+
 Reference: [Cloudflare Workers](https://hono.dev/docs/getting-started/cloudflare-workers)
 
 ---
 
 ## Helpers
+
+## Advanced Streaming Patterns
+
+Beyond `streamSSE`, Hono supports raw `ReadableStream` for custom streaming.
+
+**Manual ReadableStream:**
+
+```typescript
+app.post('/ai', async (c) => {
+  const text = await generateAIResponse()
+
+  const stream = new ReadableStream<Uint8Array>({
+    start(controller) {
+      const encoder = new TextEncoder()
+      controller.enqueue(encoder.encode(text))
+      controller.close()
+    }
+  })
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-cache',
+    }
+  })
+})
+```
+
+**Prefer Hono helpers when possible:**
+
+```typescript
+import { stream } from 'hono/streaming'
+
+// ✅ Better - uses Hono's context lifecycle
+app.get('/stream', (c) => {
+  return stream(c, async (s) => {
+    await s.write('chunk 1')
+    await s.write('chunk 2')
+  })
+})
+```
+
+**When to use raw ReadableStream:**
+
+- Custom binary protocols
+- Integrating with external streaming APIs
+- Fine-grained control over encoding
+
+Reference: [MDN ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)
+
+---
 
 ## Streaming and SSE
 
@@ -791,4 +917,4 @@ Reference: [Migration Guide](https://github.com/honojs/hono/blob/main/docs/MIGRA
 
 ---
 
-*Generated from 10 rules.*
+*Generated from 13 rules.*

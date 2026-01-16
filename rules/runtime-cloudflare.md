@@ -74,6 +74,18 @@ database_id = "xxx"
 const apiKey = process.env.API_KEY
 ```
 
+**Incorrect (global env singleton):**
+
+```typescript
+// ❌ Wrong - breaks request isolation, testing issues
+// src/env.ts
+export const env = (globalThis as unknown as { env: Env }).env
+
+// src/routes.ts
+import { env } from './env'  // Anti-pattern!
+const key = env.API_KEY
+```
+
 **Correct (using c.env):**
 
 ```typescript
@@ -83,5 +95,11 @@ app.get('/', (c) => {
   return c.json({ apiKey })
 })
 ```
+
+**Why c.env matters:**
+
+- Request-scoped: each request gets correct bindings
+- Testable: easy to mock in tests
+- Future-proof: follows Cloudflare's execution model
 
 Reference: [Cloudflare Workers](https://hono.dev/docs/getting-started/cloudflare-workers)
