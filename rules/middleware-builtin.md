@@ -1,7 +1,7 @@
 ---
 title: Built-in Middleware
 impact: MEDIUM
-impactDescription: Common middleware with correct imports
+impactDescription: Accelerated development; security best practices via battle-tested middleware
 tags: middleware, cors, logger, jwt, auth
 ---
 

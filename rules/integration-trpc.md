@@ -1,7 +1,7 @@
 ---
 title: tRPC Integration
 impact: HIGH
-impactDescription: Type-safe API with Hono + tRPC
+impactDescription: Full stack type-safety; shares types without code generation
 tags: trpc, integration, typescript
 ---
 

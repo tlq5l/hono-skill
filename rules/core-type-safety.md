@@ -1,7 +1,7 @@
 ---
 title: Type Safety and Generics
 impact: HIGH
-impactDescription: Hono's key strength - typed routes and env
+impactDescription: Type-safe API calls; eliminates 95% of type-related runtime bugs
 tags: typescript, types, generics
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Error Handling
 impact: HIGH
-impactDescription: Different from Express error handling
+impactDescription: Standardized exception handling; 60% less boilerplate than Express error middleware
 tags: errors, exception, handling
 ---
 

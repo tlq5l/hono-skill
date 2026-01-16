@@ -1,7 +1,7 @@
 ---
 title: v3 to v4 Migration
 impact: HIGH
-impactDescription: Breaking changes from Hono v3
+impactDescription: Necessary for latest features; avoids deprecated API runtime warnings
 tags: migration, v3, v4, breaking
 ---
 

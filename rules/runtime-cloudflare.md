@@ -1,7 +1,7 @@
 ---
 title: Cloudflare Workers Setup
 impact: CRITICAL
-impactDescription: Most common Hono deployment target
+impactDescription: Zero-cold-start deployment; native integration with Workers platform bindings
 tags: runtime, cloudflare, workers, setup
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Bun and Node.js Setup
 impact: HIGH
-impactDescription: Alternative runtimes with different patterns
+impactDescription: Enables high-performance execution on Bun/Node; 3x faster startup on Bun
 tags: runtime, bun, node, setup
 ---
 

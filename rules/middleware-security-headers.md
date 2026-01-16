@@ -1,7 +1,7 @@
 ---
 title: Security Headers Middleware
 impact: HIGH
-impactDescription: Post-processing middleware for security
+impactDescription: Mitigates XSS/Clickjacking; automated security baseline
 tags: security, middleware, headers
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Advanced Streaming Patterns
 impact: MEDIUM
-impactDescription: Manual streaming beyond SSE helpers
+impactDescription: Enables custom binary protocols and fine-grained encoding control
 tags: streaming, readablestream, advanced
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Runtime Detection
 impact: LOW
-impactDescription: Detect current runtime environment
+impactDescription: Ensures cross-runtime compatibility (Node, Bun, Cloudflare)
 tags: adapter, runtime, cloudflare, bun
 ---
 

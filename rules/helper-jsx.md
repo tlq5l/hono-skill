@@ -1,7 +1,7 @@
 ---
 title: JSX Engine
 impact: MEDIUM
-impactDescription: Built-in JSX middleware and rendering
+impactDescription: Type-safe server-side rendering; 0kb runtime overhead for static content
 tags: jsx, ssr, renderer
 ---
 

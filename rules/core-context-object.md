@@ -1,7 +1,7 @@
 ---
 title: Context Object Pattern
 impact: CRITICAL
-impactDescription: Core API - replaces Express req/res
+impactDescription: Prevents memory leaks/race conditions; single-object context replaces req/res
 tags: context, request, response
 ---
 

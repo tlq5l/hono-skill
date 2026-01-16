@@ -1,7 +1,7 @@
 ---
 title: Streaming and SSE
 impact: MEDIUM
-impactDescription: Server-Sent Events and streaming responses
+impactDescription: Enables real-time AI responses and SSE; low-latency user experience
 tags: streaming, sse, realtime
 ---
 

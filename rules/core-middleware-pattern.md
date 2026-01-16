@@ -1,7 +1,7 @@
 ---
 title: Middleware Pattern
 impact: HIGH
-impactDescription: Async/await pattern differs from Express
+impactDescription: Proper async execution; prevents 'hanging request' bugs common in callback styles
 tags: middleware, async, next
 ---
 

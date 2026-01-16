@@ -1,21 +1,15 @@
 {
-  "name": "hono",
-  "version": "0.1.0",
-  "status": "draft",
-  "organization": "Generated from honojs/hono",
-  "sourceRepo": "https://github.com/honojs/hono",
-  "sourceVersion": "4.11.4",
-  "generatedAt": "2026-01-16",
-  "abstract": "Hono web framework patterns for AI coding agents. Lightweight, multi-runtime (Cloudflare, Bun, Node, Deno), middleware, typed routes, and patterns that differ from Express.",
+  "version": "1.0.0",
+  "organization": "Community",
+  "date": "January 2026",
+  "abstract": "Hono web framework patterns: Context-based API (not Express req/res), async middleware, Cloudflare/Bun/Node adapters, typed routes, and patterns that differ from Express.",
   "references": [
-    "https://hono.dev/docs/",
+    "https://hono.dev",
     "https://hono.dev/docs/getting-started/basic",
     "https://hono.dev/docs/guides/middleware",
-    "https://hono.dev/docs/guides/rpc"
-  ],
-  "testStatus": {
-    "totalCases": 0,
-    "passing": 0,
-    "lastRun": null
-  }
+    "https://hono.dev/docs/guides/validation",
+    "https://hono.dev/docs/helpers/streaming",
+    "https://hono.dev/docs/getting-started/cloudflare-workers",
+    "https://github.com/honojs/hono"
+  ]
 }

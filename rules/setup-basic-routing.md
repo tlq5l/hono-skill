@@ -1,7 +1,7 @@
 ---
 title: App Creation and Basic Routing
 impact: CRITICAL
-impactDescription: Core pattern - agents often use Express syntax
+impactDescription: Prevents runtime errors; enforces return of response
 tags: setup, routing, basics
 ---
 

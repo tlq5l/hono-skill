@@ -1,7 +1,7 @@
 ---
 title: Body Parsing
 impact: HIGH
-impactDescription: Parsing request bodies correctly
+impactDescription: Standardized parsing for JSON/Form/Blob; eliminates manual stream handling
 tags: body, json, form, parseBody
 ---
 

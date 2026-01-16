@@ -1,7 +1,7 @@
 ---
 title: RPC Client
 impact: HIGH
-impactDescription: Type-safe RPC with hc
+impactDescription: End-to-end type safety; reduces integration bugs by >90%
 tags: client, rpc, hc, types
 ---
 

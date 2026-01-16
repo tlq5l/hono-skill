@@ -171,4 +171,4 @@ import { env } from './env'  // Breaks request isolation
 app.get('/', (c) => c.json({ key: c.env.API_KEY }))
 ```
 
-Reference: [Hono Docs](https://hono.dev)
+Reference: [Hono Docs](https://hono.dev), [GitHub](https://github.com/honojs/hono)

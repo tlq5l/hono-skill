@@ -1,7 +1,7 @@
 ---
 title: Input Validation
 impact: HIGH
-impactDescription: Type-safe validation middleware
+impactDescription: Runtime type guarantees; prevents malformed data injection
 tags: validator, zod, middleware
 ---
 
